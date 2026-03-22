@@ -24,11 +24,11 @@ def apply_transaction_create(tx: Transaction):
         to_account = accounts_by_id.get(tx.to_account_id)
 
         if tx.type == Transaction.TransactionType.INCOME:
-            _apply_delta(account, tx.amount, allow_negative)
+            _apply_delta(account, tx.amount - tx.fee, allow_negative)
         elif tx.type == Transaction.TransactionType.EXPENSE:
-            _apply_delta(account, -tx.amount, allow_negative)
+            _apply_delta(account, -(tx.amount + tx.fee), allow_negative)
         else:
-            _apply_delta(account, -tx.amount, allow_negative)
+            _apply_delta(account, -(tx.amount + tx.fee), allow_negative)
             _apply_delta(to_account, tx.amount, allow_negative)
 
 
@@ -50,22 +50,22 @@ def apply_transaction_update(old_tx: Transaction, new_tx: Transaction):
             account = get_account(tx.account_id)
             to_account = get_to_account(tx.to_account_id)
             if tx.type == Transaction.TransactionType.INCOME:
-                _apply_delta(account, -tx.amount, allow_negative)
+                _apply_delta(account, -(tx.amount - tx.fee), allow_negative)
             elif tx.type == Transaction.TransactionType.EXPENSE:
-                _apply_delta(account, tx.amount, allow_negative)
+                _apply_delta(account, (tx.amount + tx.fee), allow_negative)
             else:
-                _apply_delta(account, tx.amount, allow_negative)
+                _apply_delta(account, (tx.amount + tx.fee), allow_negative)
                 _apply_delta(to_account, -tx.amount, allow_negative)
 
         def apply(tx: Transaction):
             account = get_account(tx.account_id)
             to_account = get_to_account(tx.to_account_id)
             if tx.type == Transaction.TransactionType.INCOME:
-                _apply_delta(account, tx.amount, allow_negative)
+                _apply_delta(account, tx.amount - tx.fee, allow_negative)
             elif tx.type == Transaction.TransactionType.EXPENSE:
-                _apply_delta(account, -tx.amount, allow_negative)
+                _apply_delta(account, -(tx.amount + tx.fee), allow_negative)
             else:
-                _apply_delta(account, -tx.amount, allow_negative)
+                _apply_delta(account, -(tx.amount + tx.fee), allow_negative)
                 _apply_delta(to_account, tx.amount, allow_negative)
 
         reverse(old_tx)
@@ -83,9 +83,9 @@ def apply_transaction_delete(tx: Transaction):
         to_account = accounts_by_id.get(tx.to_account_id)
 
         if tx.type == Transaction.TransactionType.INCOME:
-            _apply_delta(account, -tx.amount, allow_negative)
+            _apply_delta(account, -(tx.amount - tx.fee), allow_negative)
         elif tx.type == Transaction.TransactionType.EXPENSE:
-            _apply_delta(account, tx.amount, allow_negative)
+            _apply_delta(account, (tx.amount + tx.fee), allow_negative)
         else:
-            _apply_delta(account, tx.amount, allow_negative)
+            _apply_delta(account, (tx.amount + tx.fee), allow_negative)
             _apply_delta(to_account, -tx.amount, allow_negative)

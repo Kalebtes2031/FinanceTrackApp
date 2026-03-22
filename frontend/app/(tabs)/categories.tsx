@@ -99,7 +99,7 @@ export default function CategoriesScreen() {
   };
 
   return (
-    <Screen scroll={false}>
+    <Screen scroll={true}>
       <SectionHeader title="Categories" subtitle="Group your income and expenses." />
 
       <Card>
@@ -138,7 +138,7 @@ export default function CategoriesScreen() {
           data={expense}
           keyExtractor={(item) => String(item.id)}
           renderItem={({ item }) => renderCategory(item.id, item.name, 'expense')}
-          contentContainerStyle={{ gap: 12 }}
+          contentContainerStyle={{ gap: 12, paddingBottom: 14 }}
           refreshing={isRefetching}
           onRefresh={refetch}
         />

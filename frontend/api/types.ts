@@ -25,6 +25,7 @@ export interface Transaction {
   account: number;
   to_account: number | null;
   amount: string;
+  fee: string;
   type: TransactionType;
   category: number | null;
   description: string;
@@ -52,6 +53,7 @@ export interface DashboardResponse {
     id: number;
     type: TransactionType;
     amount: string;
+    fee: string;
     description: string;
     created_at: string;
     account_id: number;

@@ -39,6 +39,17 @@ class DashboardView(APIView):
         )
         spending_by_category = SpendingByCategorySerializer(spending_qs, many=True).data
 
+        # Add virtual "Fees" category from aggregated transaction fees
+        total_fees = Transaction.objects.filter(user=request.user).aggregate(
+            total=Coalesce(Sum('fee'), Value(0, output_field=DecimalField(max_digits=14, decimal_places=2)))
+        )['total']
+        
+        if total_fees > 0:
+            spending_by_category.append({
+                'category_name': 'Fees',
+                'total': total_fees
+            })
+
         return Response(
             {
                 'total_balance': total_balance,

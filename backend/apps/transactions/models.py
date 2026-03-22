@@ -21,6 +21,7 @@ class Transaction(TimeStampedModel):
         blank=True,
     )
     amount = models.DecimalField(max_digits=14, decimal_places=2)
+    fee = models.DecimalField(max_digits=14, decimal_places=2, default=0)
     type = models.CharField(max_length=20, choices=TransactionType.choices)
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, blank=True)
     description = models.CharField(max_length=255, blank=True)

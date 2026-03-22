@@ -25,6 +25,7 @@ export function useTransactionMutations() {
           account: newTx.account,
           to_account: newTx.to_account ?? null,
           amount: newTx.amount,
+          fee: newTx.fee ?? '0',
           type: newTx.type,
           category: newTx.category ?? null,
           description: newTx.description ?? '',

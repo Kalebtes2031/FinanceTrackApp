@@ -10,6 +10,7 @@ export async function createTransaction(payload: {
   account: number;
   to_account?: number | null;
   amount: string;
+  fee?: string;
   type: Transaction['type'];
   category?: number | null;
   description?: string;
@@ -20,7 +21,7 @@ export async function createTransaction(payload: {
 
 export async function updateTransaction(
   id: number,
-  payload: Partial<{ account: number; to_account: number | null; amount: string; type: Transaction['type']; category: number | null; description: string }>
+  payload: Partial<{ account: number; to_account: number | null; amount: string; fee: string; type: Transaction['type']; category: number | null; description: string }>
 ) {
   const response = await api.patch<Transaction>(`/transactions/${id}/`, payload);
   return response.data;

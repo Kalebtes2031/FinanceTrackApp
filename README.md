@@ -5,8 +5,10 @@ Personal Finance Dashboard for tracking balances, transactions, and spending acr
 **Highlights**
 - Multi‑account support per user
 - Income, expense, and transfer transactions
-- Real‑time balance updates
-- Category‑based spending summary
+- Real‑time balance updates via **Django Signals**
+- Integrated **Fee Handling** for transfers and withdrawals
+- **Pagination support** for large datasets (Limit/Offset)
+- Category‑based spending summary with virtual fee tracking
 - JWT authentication with refresh flow
 - Secure token storage on device
 - Clean architecture with modular Django apps
@@ -18,17 +20,19 @@ Personal Finance Dashboard for tracking balances, transactions, and spending acr
 **Accounts**
 - Create and manage bank, mobile money, and cash accounts
 - Soft‑delete (archive) accounts to preserve history
+- Account balance protection (Cannot delete accounts with transaction history)
 
 **Transactions**
 - Income, expense, and transfer flows
-- Automatic balance updates on create/update/delete
-- Data integrity enforced at the model level
+- **Atomic updates**: Automatic balance updates via Signals on create/update/delete
+- **Fee Support**: Track service charges for every transaction type
+- Data integrity enforced at the model level (PROTECT on relationships)
 
 **Dashboard**
-- Total balance
+- Total balance (active accounts only)
 - Balance per account
-- Recent transactions
-- Spending by category (with chart)
+- Recent transactions (clean field naming: `account_name`, `category_name`)
+- Spending by category (with virtual "Fees" category tracking)
 
 **Categories**
 - Split by income and expense

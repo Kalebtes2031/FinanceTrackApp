@@ -41,7 +41,8 @@ export default function AccountsScreen() {
               </Pressable>
             </View>
           )}
-          contentContainerStyle={{ paddingVertical: 12 }}
+          contentContainerStyle={{ paddingTop: 12, paddingBottom:104 }}
+          showsVerticalScrollIndicator={false}
           refreshControl={<RefreshControl refreshing={isRefetching} onRefresh={refetch} />}
         />
       ) : (

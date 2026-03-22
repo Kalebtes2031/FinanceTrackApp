@@ -31,6 +31,7 @@ function TransactionForm() {
   const [accountId, setAccountId] = useState(String(existing?.account ?? accounts?.[0]?.id ?? ''));
   const [toAccountId, setToAccountId] = useState(String(existing?.to_account ?? ''));
   const [amount, setAmount] = useState(existing?.amount ?? '');
+  const [fee, setFee] = useState(existing?.fee ?? '0');
   const [categoryId, setCategoryId] = useState(String(existing?.category ?? ''));
   const [description, setDescription] = useState(existing?.description ?? '');
   const [newCategoryName, setNewCategoryName] = useState('');
@@ -41,6 +42,7 @@ function TransactionForm() {
     setAccountId(String(existing.account));
     setToAccountId(existing.to_account ? String(existing.to_account) : '');
     setAmount(existing.amount);
+    setFee(existing.fee);
     setCategoryId(existing.category ? String(existing.category) : '');
     setDescription(existing.description ?? '');
   }, [existing]);
@@ -52,6 +54,7 @@ function TransactionForm() {
       account: Number(accountId),
       to_account: type === 'transfer' ? Number(toAccountId) : undefined,
       amount,
+      fee,
       type,
       category: type === 'transfer' ? undefined : categoryId ? Number(categoryId) : null,
       description,
@@ -154,6 +157,7 @@ function TransactionForm() {
         </View>
       ) : null}
       <Input label="Amount" value={amount} onChangeText={setAmount} placeholder="0" keyboardType="numeric" />
+      <Input label="Fee" value={fee} onChangeText={setFee} placeholder="0" keyboardType="numeric" />
       <Input label="Description" value={description} onChangeText={setDescription} placeholder="Optional notes" />
       <Button
         label={editingId ? 'Save changes' : 'Add transaction'}

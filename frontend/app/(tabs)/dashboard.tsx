@@ -91,7 +91,7 @@ export default function DashboardScreen() {
             return data.spending_by_category.map((item) => (
               <View key={item.category_name} style={{ marginBottom: 12 }}>
                 <View style={styles.rowBetween}>
-                  <Text style={styles.categoryName}>{item.category_name}</Text>
+                  <Text style={styles.categoryName}>{item.category_name ==="Fees"? 'Transfer Fees' : item.category_name}</Text>
                   <Text style={styles.categoryTotal}>{item.total}</Text>
                 </View>
                 <View style={styles.barTrack}>

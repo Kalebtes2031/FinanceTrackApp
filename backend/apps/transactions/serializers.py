@@ -14,10 +14,10 @@ class TransactionSerializer(serializers.ModelSerializer):
             'account',
             'to_account',
             'amount',
+            'fee',
             'type',
             'category',
             'description',
-            'created_at',
             'updated_at',
         ]
         read_only_fields = ['id', 'created_at', 'updated_at']
@@ -31,9 +31,12 @@ class TransactionSerializer(serializers.ModelSerializer):
         tx_type = attrs.get('type', getattr(self.instance, 'type', None))
         category = attrs.get('category', getattr(self.instance, 'category', None))
         amount = attrs.get('amount', getattr(self.instance, 'amount', None))
+        fee = attrs.get('fee', getattr(self.instance, 'fee', None))
 
         if amount is not None and amount <= 0:
             raise serializers.ValidationError('Amount must be greater than zero.')
+        if fee is not None and fee < 0:
+            raise serializers.ValidationError('Fee cannot be negative.')
 
         if account and account.user_id != user.id:
             raise serializers.ValidationError('Account does not belong to user.')

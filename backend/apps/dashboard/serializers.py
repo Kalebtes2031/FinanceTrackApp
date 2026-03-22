@@ -18,6 +18,7 @@ class DashboardTransactionSerializer(serializers.ModelSerializer):
             'id', 
             'type', 
             'amount', 
+            'fee',
             'description', 
             'created_at', 
             'account_id', 
